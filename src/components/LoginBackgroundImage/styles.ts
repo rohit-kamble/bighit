@@ -8,6 +8,7 @@ export const BackGroundWrapper = styled(View)({
     position: 'relative',
     width: '100%',
     top: 0,
+    backgroundColor: 'white',
 })
 
 export const BackgroundImage = styled(ImageBackground)({

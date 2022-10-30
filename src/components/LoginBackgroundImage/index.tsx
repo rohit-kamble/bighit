@@ -16,7 +16,7 @@ const logo = '../../../src/assets/bighit-logo.png';
 const group = '../../../src/assets/group.png';
 const sketch = '../../../src/assets/sketch-transparent.png';
 
-export default function Login(props) {
+export default function Login(props: any ) {
     console.log('props', props);
     return (
         <ScrollView>
@@ -30,7 +30,7 @@ export default function Login(props) {
                     </BackGroundContainer>
                 </BackgroundImage>
             </BackGroundWrapper>
-            <LoginButton/>
+            <LoginButton navigation={props.navigation} countryInfo={props.countryInfo}/>
         </ScrollView>
     )
 }
