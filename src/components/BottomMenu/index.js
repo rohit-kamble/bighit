@@ -5,8 +5,8 @@ import { Text, View, Animated, Image } from 'react-native';
 import HomePage from '../HomePage';
 
 const Tab = createMaterialBottomTabNavigator();
-export default function BottomMenu(props: any) {
 
+export default function BottomMenu() {
     return (
         <Tab.Navigator
             headerMode="none"
@@ -22,7 +22,6 @@ export default function BottomMenu(props: any) {
             <Tab.Screen
                 name="Home"
                 options={{
-                    // tabBarLabel: 'none',
                     tabBarIcon: ({ focused, color }) => (
                         <Image
                             source={require('../../../src/assets/tabicon/home.png')}
@@ -34,7 +33,7 @@ export default function BottomMenu(props: any) {
                 }}
             >
                 {() => {
-                    return <View ><HomePage/></View>;
+                    return <HomePage/>;
                 }}
             </Tab.Screen>
             <Tab.Screen

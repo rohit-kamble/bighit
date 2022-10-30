@@ -60,7 +60,7 @@ export const CarouselListImageDescription = styled(Text)({
 })
 
 export const CarouselListImageDescriptionButton = styled(TouchableOpacity)({
-    backgroundColor: '#FF5349', 
+    backgroundColor: '#FF5349',
     alignSelf: 'center', 
     paddingHorizontal: 20, 
     borderRadius: 30, 

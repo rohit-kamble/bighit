@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { 
     WelcomeHeading, 
@@ -11,23 +10,19 @@ import {
     LoginButtonContainer
 } from './styles';
 import OtpInputs from 'react-native-otp-inputs';
-import LottieView from 'lottie-react-native';
 import MobileInput from '../MobileInput';
 import ChangeMobile from '../ChangeMobile';
 import AnimatedIcon from '../AnimateIcon';
-import { isLoading } from 'expo-font';
 
 const schedulePushNotification = async () =>{
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "otp",
+        title: "BigHit otp",
         body: '935379'
       },
       trigger: { seconds: 2 },
     });
 }
-
-
 
 export default function LoginButton({navigation, countryInfo}: any){
     const [state, setState] = useState<string>('');
@@ -54,7 +49,7 @@ export default function LoginButton({navigation, countryInfo}: any){
         }
     }, [loginView])
 
-    const handledPhone = (event: any) => {
+    const handledPhone = (event: string) => {
         const valid = event.length === 10 && event === '9990177856'
         setEnabled(valid);
         setState(event)

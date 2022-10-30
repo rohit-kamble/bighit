@@ -3,9 +3,6 @@ import { Animated, Dimensions, ScrollView } from 'react-native'
 import CarouselBar from '../CarouselBar';
 import CarouselList from '../CarouselList';
 
-const stadiumImage = '../../../src/assets/background.png';
-const group = '../../../src/assets/group.png';
-
 import { CarouselBarContainer, CarouselContainer } from './styles';
 
 const deviceWidth = Dimensions.get('window').width - 40
@@ -25,7 +22,7 @@ export default function Carousel() {
     const imageArray = []
     const barArray = []
     images.forEach(({img, heading}, i) => {
-        imageArray.push(<CarouselList {...{deviceWidth, stadiumImage, heading, group}}/>)
+        imageArray.push(<CarouselList {...{deviceWidth, heading}}/>)
         const scrollBarVal = animVal.interpolate({
             inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
             outputRange: [-itemWidth, itemWidth],
@@ -43,7 +40,8 @@ export default function Carousel() {
                 pagingEnabled
                 onScroll={
                     Animated.event(
-                        [{ nativeEvent: { contentOffset: { x: animVal } } }]
+                        [{ nativeEvent: { contentOffset: { x: animVal } } }],
+                        {useNativeDriver: false}
                     )
                 }
             >

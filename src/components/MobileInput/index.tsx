@@ -7,8 +7,9 @@ import {
     MobileInputField,
     MobileTextInputField
 } from './styles';
+import { MobileInputProps } from './types';
 
-export default function MobileInput({flag, navigation, code, handledPhone, state}: any){
+export default function MobileInput({flag, navigation, code, handledPhone, state}: MobileInputProps){
     return (
         <MobileInputContainer>
             <MobileInputCountryCode onPress={()=> navigation.navigate('CountryCode')}>

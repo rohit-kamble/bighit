@@ -1,7 +1,8 @@
 import { Animated } from 'react-native';
 import { CarouselBarContainer} from './styles';
+import { CarouselBarProps } from './types';
 
-export default function CarouselBar({i, scrollBarVal, itemWidth}: any) {
+export default function CarouselBar({i, scrollBarVal, itemWidth}: CarouselBarProps) {
     return (
         <CarouselBarContainer
             key={`bar${i}`}

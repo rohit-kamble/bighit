@@ -6,7 +6,8 @@ export const AnimatedText = styled(Text)({
     color: '#181818', 
     textAlign: 'center', 
     fontWeight: '900', 
-    fontFamily: 'avenir'
+    fontFamily: 'avenir',
+    fontSize: 18
 })
 
 export const LottieViewContainer = styled(LottieView)({

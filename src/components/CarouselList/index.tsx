@@ -1,5 +1,4 @@
 import React from 'react';
-import {View, ImageBackground, Image,  Text, TouchableOpacity} from 'react-native';
 import {
     CarouselListContainer, 
     CarouselListImageBackGround, 
@@ -11,14 +10,16 @@ import {
     CarouselListImageDescriptionButton,
     CarouselListImageDescriptionButtonText
 } from './styles';
-import { LinearGradient } from 'expo-linear-gradient';
+const stadiumImage = '../../../src/assets/background.png';
+const group = '../../../src/assets/group.png';
+import { CarouselListProps } from './types';
 
 
-export default function CarouselList ({deviceWidth, stadiumImage, heading, group}: any) {
+export default function CarouselList ({deviceWidth, heading}: CarouselListProps) {
     return (
         <CarouselListContainer deviceWidth={deviceWidth} key={`image ${heading}`}>
-            <CarouselListImageBackGround source={require('../../../src/assets/background.png')} imageStyle={{ borderRadius: 10}} resizeMode="cover">
-                <CarouselListImage source={require('../../../src/assets/group.png')}/>
+            <CarouselListImageBackGround source={require(stadiumImage)} imageStyle={{ borderRadius: 10}} resizeMode="cover">
+                <CarouselListImage source={require(group)}/>
                 <CarouselListImageHeading>{heading}</CarouselListImageHeading>
                 <CarouselListImageLinearGradient colors={['rgba(0,0,0,0.8)', 'transparent']} start={{ x: 0, y: 0.9 }} end={{ x: 0, y: 0 }}/>
             </CarouselListImageBackGround>
