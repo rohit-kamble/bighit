@@ -17,7 +17,6 @@ const group = '../../../src/assets/group.png';
 const sketch = '../../../src/assets/sketch-transparent.png';
 
 export default function Login(props: any ) {
-    console.log('props', props);
     return (
         <ScrollView>
             <BackGroundWrapper>

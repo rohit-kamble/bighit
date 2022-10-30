@@ -16,7 +16,7 @@ export default function BottomMenu(props: any) {
             labelStyle={{ fontSize: 12 }}
             backBehavior="history"
             labeled={false}
-            barStyle={{backgroundColor: '#FFFFFF'}}
+            barStyle={{backgroundColor: 'white'}}
         >
             
             <Tab.Screen
@@ -34,7 +34,7 @@ export default function BottomMenu(props: any) {
                 }}
             >
                 {() => {
-                    return <HomePage/>;
+                    return <View ><HomePage/></View>;
                 }}
             </Tab.Screen>
             <Tab.Screen

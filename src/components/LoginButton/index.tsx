@@ -1,9 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import { WelcomeHeading, OtpHeading, ExploreHeading, AgreeDescription, LetsGoText } from './styles';
+import { 
+    WelcomeHeading, 
+    OtpHeading, 
+    ExploreHeading, 
+    AgreeDescription, 
+    LetsGoText, 
+    LoginAndSubmitButton, 
+    LoginButtonContainer
+} from './styles';
 import OtpInputs from 'react-native-otp-inputs';
 import LottieView from 'lottie-react-native';
+import MobileInput from '../MobileInput';
+import ChangeMobile from '../ChangeMobile';
+import AnimatedIcon from '../AnimateIcon';
+import { isLoading } from 'expo-font';
 
 const schedulePushNotification = async () =>{
     await Notifications.scheduleNotificationAsync({
@@ -43,100 +55,65 @@ export default function LoginButton({navigation, countryInfo}: any){
     }, [loginView])
 
     const handledPhone = (event: any) => {
-        setEnabled(event.length === 10);
+        const valid = event.length === 10 && event === '9990177856'
+        setEnabled(valid);
         setState(event)
     }
     const hendledOtp = (code) => {
         setOtp(code)
     }
 
-    return(
-        <>
-            <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center', marginBottom: 20, backgroundColor: 'white'}}>
-                {!loginView ?<>
-                    <WelcomeHeading>Welcome to <Text style={{fontWeight: '900'}}>BigHit!</Text></WelcomeHeading>
-                {!mobile && <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                    <TouchableOpacity onPress={()=> navigation.navigate('CountryCode')} style={{minWidth: '20%', marginRight: 10, display: 'flex', flexDirection: 'row', alignItems: 'center',borderBottomWidth: 1, marginTop: 5, paddingBottom: 5}}>
-                        <Image source={{uri: countryInfo.flag}} style={{width: 26, height: 20, marginRight: 8}}/>
-                        <Text>{countryInfo.code}</Text>
-                    </TouchableOpacity>
-                    <View style={{minWidth: '50%'}}>
-                        <TextInput
-                            inlineImageLeft='search_icon'
-                            style={{ paddingVertical: 0, borderBottomWidth: 1, marginLeft: 5}}
-                            value={state}
-                            onChangeText={handledPhone}
-                            placeholder="Mobile No"
-                            keyboardType='phone-pad'
-                            underlineColorAndroid={'transparent'}
-                            maxLength={10}
-                        />
-                    </View>
-                </View>
-                }
-                {mobile && 
-                    <View style={{display: 'flex', flexDirection: 'row'}}>
-                        <Text>{state}</Text> 
-                        <TouchableOpacity onPress={()=> {setValidation(false)} }>
-                            <Text style={{color: 'blue', fontWeight: '900'}}>Change</Text>
-                        </TouchableOpacity>
-                    </View>
-                }
-                {mobile &&
-                <OtpInputs
-                    handleChange={hendledOtp}
-                    numberOfInputs={6} 
-                    autofillFromClipboard={false}   
-                    inputContainerStyles={{
-                        borderWidth: 1,
-                        borderStyle: 'solid',
-                        marginHorizontal: 4,
-                        borderColor: '935379' === otp ? 'blue' : 'orange'
-                    }}    
-                />
-                }
-                <OtpHeading>We will send you 6 digit OTP</OtpHeading>
-                <TouchableOpacity onPress={async () =>{  
-                    enabled && setValidation(true); 
-                    await schedulePushNotification();
-                    if(notification && notification.request.content.body === otp){
-                        setLoginView(true)
-                    }
-                    }}  style={{borderRadius: 30, backgroundColor: enabled? 'black':'#DADDE3', borderColor: 'green', borderWidth: 0, paddingHorizontal: 60, paddingVertical: 20, minWidth: 290, alignItems: 'center' }} >
-                    <LetsGoText>{!mobile ? `Let's Go`: 'submit'  }</LetsGoText> 
-                </TouchableOpacity>
-                <ExploreHeading>skip to explore</ExploreHeading>
-                <AgreeDescription>i agree to the User agrement and Privacy Policy of BigHit</AgreeDescription>
-                </> : <>
-                {loading?<View>
-                    <Text>{'Login Success'}</Text> 
-                 <LottieView
-                    autoPlay
-                    style={{
-                    width: 200,
-                    height: 200,
-                    backgroundColor: '#eee',
-                    }}
-                    source={require('../../assets/animated-images/95029-success.json')}
-                /> 
-                </View>
-                : 
-                <LottieView
-                    autoPlay
-                    style={{
-                    width: 200,
-                    height: 200,
-                    backgroundColor: '#eee',
-                    }}
-                    source={require('../../assets/animated-images/lf30_editor_qfhlc5be.json')}
-                />
-                }
-                
-                </>}
-                
+    const changeMobileNo = () => {
+        setValidation(false)
+    }
 
-            </View>
-            
-        </>
+    const loginAndSubmit = async () => {
+        enabled && setValidation(true); 
+        await schedulePushNotification();
+        if(notification && notification.request.content.body === otp){
+            setLoginView(true)
+        }
+    }
+
+    const message = (state === "" || state === "9990177856" )? 'We will send you 6 digit OTP': 'Please Enter valid Phone number'; 
+
+    return(
+        <LoginButtonContainer>
+            {!loginView ?
+                <>
+                    {!mobile ? 
+                        <WelcomeHeading>Welcome to <WelcomeHeading isBold={true}>BigHit!</WelcomeHeading></WelcomeHeading>
+                        : <WelcomeHeading isBold={true}>Enter 6 digit OTP sent on</WelcomeHeading>
+                    }
+                    {!mobile && <MobileInput {...{flag: countryInfo.flag, navigation, code: countryInfo.code, handledPhone, state}}/>}
+                    {mobile && <ChangeMobile {...{state, changeMobileNo, code: countryInfo.code }}/>}
+                    {mobile &&
+                        <OtpInputs
+                            handleChange={hendledOtp}
+                            numberOfInputs={6} 
+                            autofillFromClipboard={false}   
+                            inputStyles={{textAlign: 'center', height: 52, width: 40}}
+                            inputContainerStyles={{
+                                borderWidth: 1,
+                                borderStyle: 'solid',
+                                marginHorizontal: 4,
+                                backgroundColor: '#E2E2E2',
+                                borderRadius: 8,
+                                borderColor: '935379' === otp ? '#0062FF' : '#EA4A04'
+                            }}    
+                        />
+                    }
+                    {!mobile && <OtpHeading isValid={(state === "" || state === "9990177856" )}>{message}</OtpHeading>}
+                    <LoginAndSubmitButton onPress={loginAndSubmit} enabled={enabled} disabled={!enabled}>
+                        <LetsGoText>{!mobile ? `Let's Go`: 'submit'  }</LetsGoText> 
+                    </LoginAndSubmitButton>
+                    {mobile ? <ExploreHeading isOtpColor={true}>Resend OTP 30s</ExploreHeading> : <ExploreHeading>skip to explore</ExploreHeading>}
+                    <AgreeDescription>i agree to the User agrement and Privacy Policy of BigHit</AgreeDescription>
+                </>
+                : 
+                <AnimatedIcon isLoading={loading}/>
+            }
+        </LoginButtonContainer>
+
     )
 }

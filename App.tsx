@@ -11,9 +11,14 @@ import BottomMenu from './src/components/BottomMenu'
 import CountryCode from './src/components/CountryCode'
 
 const Stack = createNativeStackNavigator();
+const defaultCountry = {
+    code: '+91',
+    name: 'india',
+    flag: `https://flagcdn.com/48x36/in.png`
+}
 
 export default function App() {
-    const [countryInfo, setInfo] = useState({});
+    const [countryInfo, setInfo] = useState(defaultCountry);
     const [fontsLoaded] = useFonts({
         futura: require('./src/assets/font/Futura-Bold-font.ttf'),
         avenir: require('./src/assets/font/Avenir-light.otf')

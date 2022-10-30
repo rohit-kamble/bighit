@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StatusBar, Image, ScrollView,TouchableOpacity } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import React, { useState } from 'react';
+import { StatusBar, ScrollView } from 'react-native';
 import data from './country-code.json';
+import {
+    CountryCodeContainer, 
+    CountryCodeInput, 
+    CountryCodeView, 
+    CountryCodeImageContainer,
+    CountryCodeImage,
+    CountryCodeText
+} from './styles';
 
 const countryData = data.map((item)=>{
     return {
@@ -16,9 +23,7 @@ export default function CountryCode({ navigation, handledSearch}: any){
     const [newData, setData] = useState(countryData);
     
     const searchCountry = (event : any)=> {
-        console.log('event==', event);
         const searchData = countryData.filter(item=> item.name.toLowerCase().includes(event.toLowerCase()))
-        console.log('searchData', searchData);
         setValue(event)
         setData(searchData);
     }
@@ -29,27 +34,27 @@ export default function CountryCode({ navigation, handledSearch}: any){
     }
 
     return (
-        <View style={{flex:1, marginHorizontal: 24}}>
+        <CountryCodeContainer style={{flex:1, marginHorizontal: 24}}>
             <StatusBar/>
-            <TextInput 
-             style={{ paddingVertical: 0, borderBottomWidth: 1, marginLeft: 5, marginBottom: 24}}
-             placeholder="search for country"
-             value={searchValue}
-             onChangeText={searchCountry}
+            <CountryCodeText>Select Country</CountryCodeText>
+            <CountryCodeInput 
+                placeholder="search for country"
+                value={searchValue}
+                onChangeText={searchCountry}
             />
             <ScrollView>
             {newData && newData.map(({code, flag, name})=>{
                 return (
-                    <TouchableOpacity onPress={()=> handleCountryInfo({code, flag})} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 24}} key={name + code}>
-                        <View style={{display: 'flex', flexDirection: 'row'}}>
-                            <Image source={{uri: flag}} style={{width: 42, height: 28}}/>
-                            <Text>{name}</Text>
-                        </View>
-                        <Text>{code}</Text>
-                    </TouchableOpacity>
+                    <CountryCodeView onPress={()=> handleCountryInfo({code, flag})} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 24}} key={name + code}>
+                        <CountryCodeImageContainer>
+                            <CountryCodeImage source={{uri: flag}} style={{width: 42, height: 28}}/>
+                            <CountryCodeText>{name}</CountryCodeText>
+                        </CountryCodeImageContainer>
+                        <CountryCodeText>{code}</CountryCodeText>
+                    </CountryCodeView>
                 )
             })}
             </ScrollView>
-        </View>
+        </CountryCodeContainer>
     )
 }
